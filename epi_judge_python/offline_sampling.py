@@ -9,11 +9,9 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def random_sampling(k, A):
-    print(A)
     for i in range(k):
         r = random.randint(i, len(A) - 1)
         A[i], A[r] = A[r], A[i]
-        print(A)
 
 
 @enable_executor_hook
