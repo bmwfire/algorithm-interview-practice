@@ -2,6 +2,7 @@ import copy
 import functools
 import math
 
+from offline_sampling import random_sampling
 from test_framework import generic_test
 from test_framework.random_sequence_checker import (
     check_sequence_is_uniformly_random, run_func_with_retries)
@@ -9,8 +10,9 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def compute_random_permutation(n):
-    # TODO - you fill in here.
-    return []
+    permutation = list(range(n))
+    random_sampling(n, permutation)
+    return permutation
 
 
 @enable_executor_hook
