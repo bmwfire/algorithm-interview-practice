@@ -1,3 +1,5 @@
+import itertools
+
 from test_framework import generic_test
 
 
@@ -16,6 +18,15 @@ def look_and_say(n):
     s = '1'
     for _ in range(1, n):
         s = next_number(s)
+    return s
+
+
+# Pythonic Solution
+def look_and_say_pythonic(n):
+    s = '1'
+    for _ in range(n - 1):
+        s = ''.join(
+            str(len(list(group))) + key for key, group in itertools.groupby(s))
     return s
 
 
