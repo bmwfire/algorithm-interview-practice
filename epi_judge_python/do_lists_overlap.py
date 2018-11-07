@@ -1,13 +1,46 @@
 import functools
 
+from is_list_cyclic import has_cycle
+from do_terminated_lists_overlap import overlapping_no_cycle_lists
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
 
 def overlapping_lists(l0, l1):
-    # TODO - you fill in here.
-    return None
+    root0, root1 = has_cycle(l0), has_cycle(l1)
+
+    if not root0 and not root1:
+        return overlapping_no_cycle_lists(l0, l1)
+    elif (root0 and not root1) or (not root0 and root1):
+        return None
+
+    temp = root1
+    while True:
+        temp = temp.next
+        if temp is root0 or temp is root1:
+            break
+
+    if temp is not root0:
+        return None
+
+    def distance(a, b):
+        dis = 0
+        while a is not b:
+            a = a.next
+            dis += 1
+        return dis
+
+    stem0_length, stem1_length = distance(l0, root0), distance(l1, root1)
+    if stem0_length > stem1_length:
+        l1, l0 = l0, l1
+        root0, root1 = root1, root0
+    for _ in range(abs(stem0_length - stem1_length)):
+        l1 = l1.next
+    while l0 is not l1 and l0 is not root0 and l1 is not root1:
+        l0, l1 = l0.next, l1.next
+
+    return l0 if l0 is l1 else root0
 
 
 @enable_executor_hook
