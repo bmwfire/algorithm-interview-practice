@@ -2,8 +2,13 @@ from test_framework import generic_test
 
 
 def is_well_formed(s):
-    # TODO - you fill in here.
-    return True
+    left_chars, LOOKUP = [], {'(': ')', '[': ']', '{': '}'}
+    for c in s:
+        if c in LOOKUP:
+            left_chars.append(c)
+        elif not left_chars or LOOKUP[left_chars.pop()] != c:
+            return False
+    return not left_chars
 
 
 if __name__ == '__main__':
