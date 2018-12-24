@@ -1,4 +1,5 @@
 import collections
+import functools
 
 from test_framework import generic_test
 from test_framework.test_failure import PropertyName
@@ -8,8 +9,18 @@ DuplicateAndMissing = collections.namedtuple('DuplicateAndMissing',
 
 
 def find_duplicate_missing(A):
-    # TODO - you fill in here.
-    return DuplicateAndMissing(0, 0)
+    miss_XOR_dup = functools.reduce(lambda v, i: v ^ i[0] ^ i[1], enumerate(A), 0)
+
+    differ_bit, miss_or_dup = miss_XOR_dup & (~(miss_XOR_dup - 1)), 0
+    for i, a in enumerate(A):
+        if i & differ_bit:
+            miss_or_dup ^= i
+        if a & differ_bit:
+            miss_or_dup ^= a
+
+    return (DuplicateAndMissing(miss_or_dup, miss_or_dup ^ miss_XOR_dup)
+            if miss_or_dup in A else
+            DuplicateAndMissing(miss_or_dup ^ miss_XOR_dup, miss_or_dup))
 
 
 def res_printer(prop, value):
