@@ -19,7 +19,7 @@ def group_by_age(people):
         from_age = next(iter(age_to_offset))
         from_idx = age_to_offset[from_age]
         to_age = people[from_idx].age
-        to_idx = age_to_offset[people[from_idx].age]
+        to_idx = age_to_offset[to_age]
         people[from_idx], people[to_idx] = people[to_idx], people[from_idx]
         age_to_count[to_age] -= 1
         if age_to_count[to_age]:
