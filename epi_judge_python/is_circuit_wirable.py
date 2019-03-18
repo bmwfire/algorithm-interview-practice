@@ -1,4 +1,5 @@
 import functools
+import collections
 
 from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
@@ -11,8 +12,21 @@ class GraphVertex:
 
 
 def is_any_placement_feasible(graph):
-    # TODO - you fill in here.
-    return True
+    def bfs(s):
+        s.d = 0
+        q = collections.deque([s])
+
+        while q:
+            for t in q[0].edges:
+                if t.d == -1:
+                    t.d = q[0].d + 1
+                    q.append(t)
+                elif t.d == q[0].d:
+                    return False
+            del q[0]
+        return True
+
+    return all(bfs(v) for v in graph if v.d == -1)
 
 
 @enable_executor_hook
