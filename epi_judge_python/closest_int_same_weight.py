@@ -7,6 +7,8 @@ def closest_int_same_bit_count(x):
             x ^= (1 << i) | (1 << (i + 1))
             return x
 
+    raise ValueError('All bits are 0 or 1')
+
 
 if __name__ == '__main__':
     exit(
