@@ -26,6 +26,19 @@ def string_to_int(s):
         s[s[0] == '-':], 0) * (-1 if s[0] == '-' else 1)
 
 
+    # # Non-functional programming solution
+    # is_negative = False
+    # if s[0] == '-':
+    #     s = s[1:]
+    #     is_negative = True
+    #
+    # result = 0
+    # for c in s:
+    #     result = result * 10 + string.digits.index(c)
+    #
+    # return -result if is_negative else result
+
+
 def wrapper(x, s):
     if int_to_string(x) != s:
         raise TestFailure("Int to string conversion failed")
